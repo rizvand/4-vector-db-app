@@ -1,5 +1,5 @@
 import math
-from pymilvus import connections, Collection, CollectionSchema, FieldSchema, DataType
+from pymilvus import connections, Collection, CollectionSchema, FieldSchema, DataType, utility
 
 
 def cosine_similarity(a, b):
@@ -34,8 +34,8 @@ class MilvusVectorDB:
         
         schema = CollectionSchema(fields, "Vector collection")
         
-        if Collection.exists(self.collection_name):
-            Collection(self.collection_name).drop()
+        if utility.has_collection(self.collection_name):
+            utility.drop_collection(self.collection_name)
         
         self.collection = Collection(self.collection_name, schema)
         
